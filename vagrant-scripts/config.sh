@@ -29,11 +29,11 @@ curl -X PUT http://admin:password@localhost:5984/_users/org.couchdb.user:node_us
 curl -X PUT http://admin:password@localhost:5984/node_db
 
 # Add a _security document to let the node_user have access and control.
-curl -X POST http://admin:password@localhost:5984/node_db/_security \
+curl -X PUT http://admin:password@localhost:5984/node_db/_security \
   --data '{"admins": {"names": ["admin"], "roles": []}, "members": {"names": "node_user", "roles": ["api"]}}'
 
 # Bind the database to all ports for this demo example.
-sed -i s/^;bind_address = 127\.0\.0\.1$/bind_address 0.0.0.0/ /opt/couchdb/etc/local.ini
+sed -i 's/^;bind_address = 127\.0\.0\.1$/bind_address = 0.0.0.0/' /opt/couchdb/etc/local.ini
 
 # Need to reboot for upgrades to take affect, which will also restart couchdb with the new configs.
 shutdown -r now
