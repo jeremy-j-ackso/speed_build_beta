@@ -30,7 +30,7 @@ curl -s -X PUT http://admin:password@localhost:5984/node_db
 
 # Add a _security document to let the node_user have access and control.
 curl -s -X PUT http://admin:password@localhost:5984/node_db/_security \
-  -H "Content-Type: application/json"
+  -H "Content-Type: application/json" \
   --data '{"admins": {"names": ["admin"], "roles": []}, "members": {"names": "node_user", "roles": ["api"]}}'
 
 # Bind the database to all ports for this demo example.
