@@ -1,5 +1,5 @@
 # Get the couchdb official apache repo
-echo "deb https://apache.bintray.com/couchdb-deb xenial main" > /etc/sources.list.d/couchdb.list
+echo "deb https://apache.bintray.com/couchdb-deb xenial main" > /etc/apt/sources.list.d/couchdb.list
 curl -sL https://couchdb.apache.org/repo/bintray-pubkey.asc | sudo apt-key add -
 
 # Set up the debconf for installing couchdb
@@ -20,7 +20,10 @@ apt-get upgrade -y -q
 apt-get install -y -q couchdb
 
 # Create a node_user for couchdb.
-curl -X POST http://localhost:5984/_users/org.couchdb.user:node_user \
+curl -X PUT http://admin:password@localhost:5984/_users/org.couchdb.user:node_user \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
   --data '{"name": "node_user", "password": "reallysecure", "roles": ["api"], "type": }'
+
+# Create a database for us to use for this example
+
