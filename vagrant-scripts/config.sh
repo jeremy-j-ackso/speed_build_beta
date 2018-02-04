@@ -20,16 +20,17 @@ apt-get upgrade -y -q
 apt-get install -y -q couchdb
 
 # Create a node_user for couchdb.
-curl -X PUT http://admin:password@localhost:5984/_users/org.couchdb.user:node_user \
+curl -s -X PUT http://admin:password@localhost:5984/_users/org.couchdb.user:node_user \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data '{"name": "node_user", "password": "reallysecure", "roles": ["api"]}'
+  --data '{"name": "node_user", "password": "reallysecure", "roles": ["api"], "type": "user"}'
 
 # Create a database for us to use for this example
-curl -X PUT http://admin:password@localhost:5984/node_db
+curl -s -X PUT http://admin:password@localhost:5984/node_db
 
 # Add a _security document to let the node_user have access and control.
-curl -X PUT http://admin:password@localhost:5984/node_db/_security \
+curl -s -X PUT http://admin:password@localhost:5984/node_db/_security \
+  -H "Content-Type: application/json"
   --data '{"admins": {"names": ["admin"], "roles": []}, "members": {"names": "node_user", "roles": ["api"]}}'
 
 # Bind the database to all ports for this demo example.
