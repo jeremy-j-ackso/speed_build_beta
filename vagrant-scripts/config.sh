@@ -1,6 +1,6 @@
 # Get the couchdb official apache repo
 echo "deb https://apache.bintray.com/couchdb-deb xenial main" > /etc/sources.list.d/couchdb.list
-curl -L https://couchdb.apache.org/repo/bintray-pubkey.asc | sudo apt-key add -
+curl -sL https://couchdb.apache.org/repo/bintray-pubkey.asc | sudo apt-key add -
 
 # Set up the debconf for installing couchdb
 COUCHDB_PASSWORD=password
