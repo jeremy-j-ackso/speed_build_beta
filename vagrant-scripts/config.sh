@@ -31,7 +31,7 @@ curl -s -X PUT http://admin:password@localhost:5984/node_db
 # Add a _security document to let the node_user have access and control.
 curl -s -X PUT http://admin:password@localhost:5984/node_db/_security \
   -H "Content-Type: application/json" \
-  --data '{"admins": {"names": ["admin"], "roles": []}, "members": {"names": "node_user", "roles": ["api"]}}'
+  --data '{"admins": {"names": [], "roles": []}, "members": {"names": ["node_user"], "roles": ["api"]}}'
 
 # Bind the database to all ports for this demo example.
 sed -i 's/^;bind_address = 127\.0\.0\.1$/bind_address = 0.0.0.0/' /opt/couchdb/etc/local.ini
