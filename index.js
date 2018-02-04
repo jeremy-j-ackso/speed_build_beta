@@ -1,11 +1,15 @@
 // 3rd party libs
 const express = require('express');
+const bodyParser = require('body-parser');
 
-// My funcctions
-const query = require('./src/query.js');
+// My functions
+const { getSomeData, insertOrUpdate } = require('./src/query.js');
 
 // My application
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
 app.get('/', (req, res) => {
   getSomeData()
