@@ -4,9 +4,10 @@ const bodyParser = require('body-parser');
 
 // My functions
 const {
-  getSomeData,
+  getDocById,
   insertOrUpdateSingle,
-  getAllData
+  getAllData,
+  getDataByQuery,
 } = require('./src/query.js');
 
 // My application
@@ -16,23 +17,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
-  console.log('body:', req.body)
-  console.log('query:', req.query)
-  if (req.body = {}) {
+  if (Object.keys(req.query).length === 0) {
     getAllData()
       .then(passedData => res.send(passedData))
       .catch(new Error('Some kind of error message.'));
+  } else if (req.query.key || req.query._id) {
+    getDocById(req.query)
+      .then(passedData => res.send(passedData))
+      .catch(new Error('Some kind of error message.'));
   } else {
-    getSomeData()
+    getDataByQuery(req.query)
       .then(passedData => res.send(passedData))
       .catch(new Error('Some kind of error message.'));
   }
-})
+});
 
 app.post('/', (req, res) => {
   insertOrUpdateSingle(req.body)
-    .then(passed_data => res.send(passed_data))
+    .then(passedData => res.send(passedData))
     .catch(new Error('Some kind of error message.'));
-})
+});
 
 app.listen('3000');
